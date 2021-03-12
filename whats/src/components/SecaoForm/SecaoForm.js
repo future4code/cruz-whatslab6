@@ -20,15 +20,10 @@ export class SecaoForm extends React.Component {
     });
   }
 	render() {
-		return <div className="todo">
-        <div className="mensagens">
-    
-        </div>
-      <div className="form">
-        <input type="text" onChange={this.props.onChangeTxt} value={this.props.usuario} />
-        <input type="text" onChange={this.props.onChangeUsuario} value={this.props.mensagem} />
-        <button onClick="">Enviar</button>
-      </div>
+		return <div className="form">
+        <input type="text" onChange={this.onChangeTxt} value={this.props.usuario} />
+        <input type="text" onChange={this.onChangeUsuario} value={this.props.mensagem} />
+        <button >Enviar</button>
       </div>
 	}
 }

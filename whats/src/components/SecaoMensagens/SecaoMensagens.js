@@ -1,9 +1,17 @@
 import React, {Component} from 'react'
-import './SecaoForm.css'
+import './SecaoMensagens.css'
 import styled from 'styled-components'
-export class SecaoForm extends React.Component {
+import {SecaoForm} from '../SecaoForm/SecaoForm'
+
+export class SecaoMensagens extends React.Component {
 
   state = {
+    mensagens: [
+      {
+        usuario: "Adimin",
+        mensagem: "Esta é uma mensagem teste"
+      }
+    ],
     usuario:"",
     mensagem: ""
   }
@@ -21,14 +29,11 @@ export class SecaoForm extends React.Component {
   }
 	render() {
 		return <div className="todo">
-        <div className="mensagens">
-    
+      <div className="mensagens">
+"Testes"
+      </div>
+      <SecaoForm></SecaoForm>
         </div>
-      <div className="form">
-        <input type="text" onChange={this.props.onChangeTxt} value={this.props.usuario} />
-        <input type="text" onChange={this.props.onChangeUsuario} value={this.props.mensagem} />
-        <button onClick="">Enviar</button>
-      </div>
-      </div>
+     
 	}
 }

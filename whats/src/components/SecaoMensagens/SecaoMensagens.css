@@ -1,0 +1,7 @@
+
+  .mensagens{
+    overflow-y:auto; 
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 50px);
+  }
