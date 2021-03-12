@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-
+import iconeEnviar from './img/envia-icone.svg'
 const Box1 = styled.div`
   display: flex;
   flex-direction: column;
@@ -9,9 +9,10 @@ const Box1 = styled.div`
   box-sizing: border-box;
   border: 1px solid black;
   height: 100vh;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   margin: auto;
-  padding: 20px;
+  background-color: #ECE5DD;
 
 `
 
@@ -21,27 +22,61 @@ const BoxMensagens = styled.div`
   flex-grow: 1;
   padding: 20px;
   justify-content: flex-start;
+  overflow-y: auto;
 `
 
 const BoxInputs = styled.div`
+  padding: 20px;
   display: flex;
 `
 
 const InputNome = styled.input`
+margin:5px;
+  font-size: 18px;
+  padding: 5px;
   width: 100px;
 `
 
 const InputMensagem = styled.input`
   flex-grow: 1;
+margin:5px;
+  font-size: 18px;
+  padding: 5px;
+  width: 100px;
+`
+let ButtonEnviar = styled.div`
+background-color: #25D366AA;
+font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  width:40px;
+  height: 40px;
+  justify-content:center;
+  align-items:center;
+  border-radius:50%;
+  background-image:url(iconeEnviar);
+:hover{
+background-color: #25D366;
 `
 
 const BoxMensagem = styled.div`
   border-radius: 3px;
-  background-color: blue;
+  background-color: #DCF8C6;
   margin: 5px;
   width: 80%;
+  display:flex;
+  flex-direction: column;
+  font-size:18px;
+  p{
+    padding: 2px;
+    margin: 2px;
+  }
+  p strong{
+    color: #25D366;
+  }
 `
 const BoxMensagemEu = styled(BoxMensagem)`
+  background-color: #FFFFFF;
   align-self: flex-end;
 `
 const textInput = React.createRef();
@@ -96,13 +131,13 @@ class App extends React.Component {
             if(msg.usuario == "eu" || msg.usuario == "Eu" == "EU"){
             return <BoxMensagemEu key = {index} 
             useDoubleClick={this.onDoubleClickMensagem} > 
-              <strong>{msg.usuario}</strong>: {msg.textoMensagem}
+              <p>{msg.textoMensagem}</p>
             </BoxMensagemEu>
             }
             else{
               return <BoxMensagem key = {index} 
             useDoubleClick={this.onDoubleClickMensagem} > 
-              <strong>{msg.usuario}</strong>: {msg.textoMensagem}
+              <p><strong>{msg.usuario}</strong> </p><p>{msg.textoMensagem}</p>
             </BoxMensagem>
             }
           })}
@@ -123,7 +158,9 @@ class App extends React.Component {
             onChange = {this.onChangeInputMensagem}
             value = {this.state.inputMensagem}
           />
-          <button onClick = {this.adicionaMensagem}>Enviar</button>
+          <ButtonEnviar onClick = {this.adicionaMensagem}>
+          <img src={iconeEnviar}/>
+          </ButtonEnviar>
         </BoxInputs>
       </Box1>
     );
