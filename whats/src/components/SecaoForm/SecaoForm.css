@@ -1,0 +1,21 @@
+
+.todo{
+    border: 1px solid black;
+    height: calc(100% - 12px);
+    max-width: 100%;
+    min-width: 500px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px; 
+    overflow-y:auto; 
+  }
+  .form{
+      display: flex;
+      justify-content: space-between;
+      padding: 5px;
+  }
+  .mensagens{
+    overflow-y:auto; 
+    display: flex;
+    flex-direction: column;
+  }
