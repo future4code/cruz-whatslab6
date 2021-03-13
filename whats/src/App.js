@@ -162,14 +162,14 @@ class App extends React.Component {
           {this.state.arrayMensagens.map((msg, index) => {
             if (msg.usuario === "eu" || msg.usuario === "Eu" === "EU") {
               return <BoxMensagemEu key={index}
-                onClick={this.onDoubleClickMensagem.bind(index)} >
+              onClick={this.onDoubleClickMensagem.bind(null, index)} >
                 <p>{msg.textoMensagem}</p>
               </BoxMensagemEu>
             }
             else {
               return <BoxMensagem key={index}
                 onClick={this.onDoubleClickMensagem.bind(null, index)} >
-                <p><strong>{index}{msg.usuario}</strong> </p><p>{msg.textoMensagem}</p>
+                <p><strong>{msg.usuario}</strong> </p><p>{msg.textoMensagem}</p>
               </BoxMensagem>
             }
           })}
