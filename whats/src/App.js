@@ -32,7 +32,7 @@ const BoxInputs = styled.div`
   display: flex;
 `
 
-const InputNome = styled.input`
+const InputUsuario = styled.input`
 margin:5px;
   font-size: 18px;
   padding: 5px;
@@ -274,9 +274,9 @@ class App extends React.Component {
 
         </BoxMensagens>
         <BoxInputs>
-          <InputNome
+          <InputUsuario
             onKeyPress={this.onChangeInputUsuario}
-            placeholder={'Nome'}
+            placeholder={'Usuário'}
             onChange={this.onChangeInputUsuario}
             value={this.state.inputUsuario}
           />
