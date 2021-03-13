@@ -97,6 +97,7 @@ const MensagemTopo = styled.div`
 `
 const MensagemResposta = styled.p`{
   background-color: #e9e9e9;
+
 }` 
 
 const textInput = React.createRef();
@@ -180,7 +181,7 @@ class App extends React.Component {
   onClickResponder = (index, event) => {
     event = event;
     if (true) {
-      console.log("aqui", index, event);
+      // console.log("aqui", index, event);
       clicks = 0;
       if (this.state.inputMensagem !== "" && this.state.inputUsuario !== "") {
 
