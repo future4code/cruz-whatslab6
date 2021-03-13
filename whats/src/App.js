@@ -160,7 +160,7 @@ class App extends React.Component {
       <Box1>
         <BoxMensagens >
           {this.state.arrayMensagens.map((msg, index) => {
-            if (msg.usuario === "eu" || msg.usuario === "Eu" === "EU") {
+            if (msg.usuario === "eu" || msg.usuario === "Eu" ||msg.usuario  === "EU") {
               return <BoxMensagemEu key={index}
               onClick={this.onDoubleClickMensagem.bind(null, index)} >
                 <p>{msg.textoMensagem}</p>
