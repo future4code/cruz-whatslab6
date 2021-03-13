@@ -97,8 +97,8 @@ const MensagemTopo = styled.div`
 `
 const MensagemResposta = styled.p`{
   background-color: #e9e9e9;
-
-}` 
+}
+` 
 
 const textInput = React.createRef();
 
@@ -109,7 +109,7 @@ class App extends React.Component {
   state = {
     arrayMensagens: [{
       usuario: "Adimin",
-      textoMensagem: "Este é o seu whats use com responsabilidade",
+      textoMensagem: "Este é o seu whats use com responsabilidade. Click duas vezes para apagar(É uma ação irreversivel tenha cuidado). Escreva a mensagem e DEPOIS click no icone de alguma mensagem para responde-lá. Mensagens vazias não serão aceitas",
       resposta: false
     }],
     inputUsuario: '',
