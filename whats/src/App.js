@@ -57,6 +57,7 @@ font-size: 18px;
   background-image:url(iconeEnviar);
 :hover{
 background-color: #25D366;
+}
 `
 
 const BoxMensagem = styled.div`
@@ -79,7 +80,11 @@ const BoxMensagemEu = styled(BoxMensagem)`
   background-color: #FFFFFF;
   align-self: flex-end;
 `
+
 const textInput = React.createRef();
+
+let timer;
+let clicks = 0;
 
 class App extends React.Component {
   state = {
@@ -90,76 +95,102 @@ class App extends React.Component {
     inputUsuario: '',
     inputMensagem: ''
   }
-  onChangeInputUsuario= (event) => {
-    if(event.key == "Enter"){
+  onChangeInputUsuario = (event) => {
+    if (event.key == "Enter") {
       textInput.current.focus();
     }
-    else{
-    this.setState({ inputUsuario: event.target.value });
+    else {
+      this.setState({ inputUsuario: event.target.value });
     }
   }
 
   onChangeInputMensagem = (event) => {
-    if(event.key == "Enter"){
+    if (event.key == "Enter") {
       this.adicionaMensagem();
     }
-    else{
-    this.setState({ inputMensagem: event.target.value });
+    else {
+      this.setState({ inputMensagem: event.target.value });
     }
   }
-
-  onDoubleClickMensagem = (click) => {
-      alert("Dois clicks");
+  onDoubleClickMensagem = (index, event) => {
+    
+    if(clicks === 0){
+      clicks++;
+    }
+    if (clicks == 1) {
+      timer = setTimeout(() => {
+        clicks = 0;
+      }, 200);
+      clicks++;
+    }
+    else if (clicks == 2) {
+      let novoArrayMensagens = [...this.state.arrayMensagens]
+      novoArrayMensagens.splice(index, 1);
+      this.setState(
+        {arrayMensagens: novoArrayMensagens}
+        )
+      clicks = 0;
+    }
   }
 
   adicionaMensagem = () => {
-    const novaMsg = {
-      usuario: this.state.inputUsuario,
-      textoMensagem: this.state.inputMensagem
+    if (this.state.inputMensagem !== "" && this.state.inputUsuario !== "") {
+      const novaMsg = {
+        usuario: this.state.inputUsuario,
+        textoMensagem: this.state.inputMensagem
+      }
+
+      const novoArrayMensagens = [novaMsg, ...this.state.arrayMensagens]
+
+      this.setState({ arrayMensagens: novoArrayMensagens, inputMensagem: '' })
     }
-    
-    const novoArrayMensagens = [novaMsg, ...this.state.arrayMensagens]
+    else if (this.state.inputMensagem !== "" && this.state.inputUsuario === "") {
+      const novaMsg = {
+        usuario: "Anônimo",
+        textoMensagem: this.state.inputMensagem
+      }
 
-    this.setState({arrayMensagens: novoArrayMensagens, inputMensagem: ''})
+      const novoArrayMensagens = [novaMsg, ...this.state.arrayMensagens]
+
+      this.setState({ arrayMensagens: novoArrayMensagens, inputMensagem: '' })
+    }
   }
-
   render() {
     return (
       <Box1>
         <BoxMensagens >
           {this.state.arrayMensagens.map((msg, index) => {
-            if(msg.usuario == "eu" || msg.usuario == "Eu" == "EU"){
-            return <BoxMensagemEu key = {index} 
-            useDoubleClick={this.onDoubleClickMensagem} > 
-              <p>{msg.textoMensagem}</p>
-            </BoxMensagemEu>
+            if (msg.usuario === "eu" || msg.usuario === "Eu" === "EU") {
+              return <BoxMensagemEu key={index}
+                onClick={this.onDoubleClickMensagem.bind(index)} >
+                <p>{msg.textoMensagem}</p>
+              </BoxMensagemEu>
             }
-            else{
-              return <BoxMensagem key = {index} 
-            useDoubleClick={this.onDoubleClickMensagem} > 
-              <p><strong>{msg.usuario}</strong> </p><p>{msg.textoMensagem}</p>
-            </BoxMensagem>
+            else {
+              return <BoxMensagem key={index}
+                onClick={this.onDoubleClickMensagem.bind(null, index)} >
+                <p><strong>{index}{msg.usuario}</strong> </p><p>{msg.textoMensagem}</p>
+              </BoxMensagem>
             }
           })}
         </BoxMensagens>
         <BoxInputs>
           <InputNome
-    
-          onKeyPress = {this.onChangeInputUsuario}
+            onKeyPress={this.onChangeInputUsuario}
             placeholder={'Nome'}
-            onChange = {this.onChangeInputUsuario}
-            value = {this.state.inputUsuario}
+            onChange={this.onChangeInputUsuario}
+            value={this.state.inputUsuario}
           />
 
-          <InputMensagem 
-           ref={textInput}
-          onKeyPress = {this.onChangeInputMensagem}
+          <InputMensagem
+            ref={textInput}
+            onKeyPress={this.onChangeInputMensagem}
             placeholder={'Mensagem'}
-            onChange = {this.onChangeInputMensagem}
-            value = {this.state.inputMensagem}
+            onChange={this.onChangeInputMensagem}
+            value={this.state.inputMensagem}
           />
-          <ButtonEnviar onClick = {this.adicionaMensagem}>
-          <img src={iconeEnviar}/>
+          <ButtonEnviar onClick={this.adicionaMensagem}>
+            <img src={iconeEnviar} />
           </ButtonEnviar>
         </BoxInputs>
       </Box1>
