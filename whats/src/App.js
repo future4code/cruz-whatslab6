@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components'
 import iconeEnviar from './img/envia-icone.svg'
-const Box1 = styled.div`
+import iconeResponder from './img/reply_icon-icons.com_50050.png'
+
+const Todo = styled.div`
   display: flex;
   flex-direction: column;
   -webkit-box-pack: end;
@@ -39,7 +41,7 @@ margin:5px;
 
 const InputMensagem = styled.input`
   flex-grow: 1;
-margin:5px;
+  margin:5px;
   font-size: 18px;
   padding: 5px;
   width: 100px;
@@ -57,14 +59,13 @@ font-size: 18px;
   background-image:url(iconeEnviar);
 :hover{
 background-color: #25D366;
-}
-`
+}`
 
 const BoxMensagem = styled.div`
   border-radius: 3px;
   background-color: #DCF8C6;
   margin: 5px;
-  width: 80%;
+  max-width: 80%;
   display:flex;
   flex-direction: column;
   font-size:18px;
@@ -79,7 +80,24 @@ const BoxMensagem = styled.div`
 const BoxMensagemEu = styled(BoxMensagem)`
   background-color: #FFFFFF;
   align-self: flex-end;
+
 `
+
+const MensagemTopo = styled.div`
+  height: 20px;
+  display: flex;
+  justify-content: space-between;
+  img{
+    cursor: pointer;
+    opacity: 0.4;
+  }
+  img:hover{
+    opacity: 1;
+  }
+`
+const MensagemResposta = styled.p`{
+  background-color: #e9e9e9;
+}` 
 
 const textInput = React.createRef();
 
@@ -90,10 +108,12 @@ class App extends React.Component {
   state = {
     arrayMensagens: [{
       usuario: "Adimin",
-      textoMensagem: "Este é o seu whats use com responsabilidade"
+      textoMensagem: "Este é o seu whats use com responsabilidade",
+      resposta: false
     }],
     inputUsuario: '',
-    inputMensagem: ''
+    inputMensagem: '',
+    resposta: false
   }
   onChangeInputUsuario = (event) => {
     if (event.key == "Enter") {
@@ -113,8 +133,8 @@ class App extends React.Component {
     }
   }
   onDoubleClickMensagem = (index, event) => {
-    
-    if(clicks === 0){
+
+    if (clicks === 0) {
       clicks++;
     }
     if (clicks == 1) {
@@ -127,8 +147,8 @@ class App extends React.Component {
       let novoArrayMensagens = [...this.state.arrayMensagens]
       novoArrayMensagens.splice(index, 1);
       this.setState(
-        {arrayMensagens: novoArrayMensagens}
-        )
+        { arrayMensagens: novoArrayMensagens }
+      )
       clicks = 0;
     }
   }
@@ -137,7 +157,8 @@ class App extends React.Component {
     if (this.state.inputMensagem !== "" && this.state.inputUsuario !== "") {
       const novaMsg = {
         usuario: this.state.inputUsuario,
-        textoMensagem: this.state.inputMensagem
+        textoMensagem: this.state.inputMensagem,
+        resposta: false
       }
 
       const novoArrayMensagens = [novaMsg, ...this.state.arrayMensagens]
@@ -147,32 +168,109 @@ class App extends React.Component {
     else if (this.state.inputMensagem !== "" && this.state.inputUsuario === "") {
       const novaMsg = {
         usuario: "Anônimo",
-        textoMensagem: this.state.inputMensagem
+        textoMensagem: this.state.inputMensagem,
+        resposta: false
       }
-
       const novoArrayMensagens = [novaMsg, ...this.state.arrayMensagens]
 
       this.setState({ arrayMensagens: novoArrayMensagens, inputMensagem: '' })
     }
   }
+
+  onClickResponder = (index, event) => {
+    event = event;
+    if (true) {
+      console.log("aqui", index, event);
+      clicks = 0;
+      if (this.state.inputMensagem !== "" && this.state.inputUsuario !== "") {
+
+        let novoArrayMensagens = [...this.state.arrayMensagens]
+
+        const novaMsg = {
+          usuario: this.state.inputUsuario,
+          textoMensagem: this.state.inputMensagem,
+          resposta: true,
+          repostaUsuario: novoArrayMensagens[index].usuario,
+          respostaTextoMensagem: novoArrayMensagens[index].textoMensagem
+        }
+        novoArrayMensagens = [novaMsg, ...this.state.arrayMensagens]
+        this.setState({ arrayMensagens: novoArrayMensagens, inputMensagem: '' })
+      }
+      else if (this.state.inputMensagem !== "" && this.state.inputUsuario === "") {
+        let novoArrayMensagens = [...this.state.arrayMensagens]
+
+        const novaMsg = {
+          usuario: "Anônimo",
+          textoMensagem: this.state.inputMensagem,
+          resposta: true,
+          repostaUsuario: novoArrayMensagens[index].usuario,
+          respostaTextoMensagem: novoArrayMensagens[index].textoMensagem
+        }
+
+        novoArrayMensagens = [novaMsg, ...this.state.arrayMensagens]
+        this.setState({ arrayMensagens: novoArrayMensagens, inputMensagem: '' })
+      }
+
+    }
+  }
   render() {
     return (
-      <Box1>
+      <Todo>
         <BoxMensagens >
           {this.state.arrayMensagens.map((msg, index) => {
-            if (msg.usuario === "eu" || msg.usuario === "Eu" ||msg.usuario  === "EU") {
-              return <BoxMensagemEu key={index}
-              onClick={this.onDoubleClickMensagem.bind(null, index)} >
-                <p>{msg.textoMensagem}</p>
-              </BoxMensagemEu>
+            if (msg.resposta) {
+              if (msg.usuario === "eu" || msg.usuario === "Eu" || msg.usuario === "EU") {
+                return <BoxMensagemEu key={index}
+                  onClick={this.onDoubleClickMensagem.bind(null, index)} >
+                     <MensagemResposta>
+                 <p>Resposta: <strong>{msg.repostaUsuario}</strong></p>
+                 <p>{msg.respostaTextoMensagem}</p>
+               </MensagemResposta>
+             <MensagemTopo>
+               <p> </p>
+                    <img src={iconeResponder} onClick={this.onClickResponder.bind(null, index)}></img>
+                  </MensagemTopo>       
+                  <p>{msg.textoMensagem}</p>
+                </BoxMensagemEu>
+              }
+              else {
+                return <BoxMensagem key={index}
+                  onClick={this.onDoubleClickMensagem.bind(null, index)} >
+                     <MensagemResposta>
+                 <p>Resposta: <strong>{msg.repostaUsuario}</strong></p>
+                 <p>{msg.respostaTextoMensagem}</p>
+               </MensagemResposta>
+                  <MensagemTopo><p><strong>{msg.usuario}</strong> </p>
+                    <img src={iconeResponder} onClick={this.onClickResponder.bind(null, index)}></img>
+                  </MensagemTopo>
+                  <p>{msg.textoMensagem}</p>
+                </BoxMensagem>
+
+              }
             }
             else {
-              return <BoxMensagem key={index}
-                onClick={this.onDoubleClickMensagem.bind(null, index)} >
-                <p><strong>{msg.usuario}</strong> </p><p>{msg.textoMensagem}</p>
-              </BoxMensagem>
+              if (msg.usuario === "eu" || msg.usuario === "Eu" || msg.usuario === "EU") {
+                return <BoxMensagemEu key={index}
+                  onClick={this.onDoubleClickMensagem.bind(null, index)} >
+             <MensagemTopo><p> </p>
+                    <img src={iconeResponder} onClick={this.onClickResponder.bind(null, index)}></img>
+                  </MensagemTopo>       
+                  <p>{msg.textoMensagem}</p>
+                </BoxMensagemEu>
+              }
+              else {
+                return <BoxMensagem key={index}
+                  onClick={this.onDoubleClickMensagem.bind(null, index)} >
+                  <MensagemTopo><p><strong>{msg.usuario}</strong> </p>
+                    <img src={iconeResponder} onClick={this.onClickResponder.bind(null, index)}></img>
+                  </MensagemTopo>
+                  <p>{msg.textoMensagem}</p>
+                </BoxMensagem>
+
+              }
             }
           })}
+
         </BoxMensagens>
         <BoxInputs>
           <InputNome
@@ -193,7 +291,7 @@ class App extends React.Component {
             <img src={iconeEnviar} />
           </ButtonEnviar>
         </BoxInputs>
-      </Box1>
+      </Todo>
     );
   }
 }
