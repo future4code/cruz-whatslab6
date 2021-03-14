@@ -23,34 +23,39 @@ const BoxMensagens = styled.div`
   display: flex;
   flex-direction: column-reverse;
   flex-grow: 1;
-  padding: 20px;
+  padding: 20px 20px 0px 20px;
   justify-content: flex-start;
   overflow-y: auto;
+  margin-top: 20px;
 `
 
 const BoxInputs = styled.div`
   padding: 20px;
   display: flex;
+  align-items:center;
 `
 
 const InputUsuario = styled.input`
   margin:5px;
   font-size: 18px;
-  padding: 10px 5px 5px 15px;
+  padding: 10px 15px 10px 15px;
   width: 100px;
   border-radius: 80px;
+  height:20px;
   border: 0px;
+    border:1px solid #ffffffff;
+    display: flex;
+    align-items: center;
+  :focus{
+    outline: none !important;
+    border:1px solid #25D366;
+  }
+`
+const InputMensagem = styled(InputUsuario)`
+  flex-grow: 1;
+  width: 100px;
 `
 
-const InputMensagem = styled.input`
-  flex-grow: 1;
-  margin:5px;
-  font-size: 18px;
-  padding: 10px 5px 5px 15px;
-  width: 100px;
-  border-radius: 80px;
-  border: 0px;
-`
 let ButtonEnviar = styled.div`
   background-color: #128C7E;
   font-size: 18px;
@@ -74,6 +79,7 @@ const BoxMensagem = styled.div`
   display:flex;
   flex-direction: column;
   font-size:18px;
+  align-self: flex-start;
   p{
     padding: 2px;
     margin: 2px;
@@ -103,7 +109,7 @@ const MensagemTopo = styled.div`
 const MensagemResposta = styled.p`{
   background-color: #e9e9e9;
 }
-` 
+`
 
 const textInput = React.createRef();
 
@@ -228,24 +234,24 @@ class App extends React.Component {
               if (msg.usuario === "eu" || msg.usuario === "Eu" || msg.usuario === "EU") {
                 return <BoxMensagemEu key={index}
                   onClick={this.onDoubleClickMensagem.bind(null, index)} >
-                     <MensagemResposta>
-                 <p>Resposta: <strong>{msg.repostaUsuario}</strong></p>
-                 <p>{msg.respostaTextoMensagem}</p>
-               </MensagemResposta>
-             <MensagemTopo>
-               <p> </p>
+                  <MensagemResposta>
+                    <p>Resposta: <strong>{msg.repostaUsuario}</strong></p>
+                    <p>{msg.respostaTextoMensagem}</p>
+                  </MensagemResposta>
+                  <MensagemTopo>
+                    <p> </p>
                     <img src={iconeResponder} onClick={this.onClickResponder.bind(null, index)}></img>
-                  </MensagemTopo>       
+                  </MensagemTopo>
                   <p>{msg.textoMensagem}</p>
                 </BoxMensagemEu>
               }
               else {
                 return <BoxMensagem key={index}
                   onClick={this.onDoubleClickMensagem.bind(null, index)} >
-                     <MensagemResposta>
-                 <p>Resposta: <strong>{msg.repostaUsuario}</strong></p>
-                 <p>{msg.respostaTextoMensagem}</p>
-               </MensagemResposta>
+                  <MensagemResposta>
+                    <p>Resposta: <strong>{msg.repostaUsuario}</strong></p>
+                    <p>{msg.respostaTextoMensagem}</p>
+                  </MensagemResposta>
                   <MensagemTopo><p><strong>{msg.usuario}</strong> </p>
                     <img src={iconeResponder} onClick={this.onClickResponder.bind(null, index)}></img>
                   </MensagemTopo>
@@ -258,9 +264,9 @@ class App extends React.Component {
               if (msg.usuario === "eu" || msg.usuario === "Eu" || msg.usuario === "EU") {
                 return <BoxMensagemEu key={index}
                   onClick={this.onDoubleClickMensagem.bind(null, index)} >
-             <MensagemTopo><p> </p>
+                  <MensagemTopo><p> </p>
                     <img src={iconeResponder} onClick={this.onClickResponder.bind(null, index)}></img>
-                  </MensagemTopo>       
+                  </MensagemTopo>
                   <p>{msg.textoMensagem}</p>
                 </BoxMensagemEu>
               }
