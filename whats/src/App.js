@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import iconeEnviar from './img/envia-icone.svg'
 import iconeResponder from './img/reply_icon-icons.com_50050.png'
+import background from './img/background-whats-color.png'
 
 const Todo = styled.div`
   display: flex;
@@ -15,7 +16,7 @@ const Todo = styled.div`
   max-width: 600px;
   margin: auto;
   background-color: #ECE5DD;
-
+  background-image:url("background");
 `
 
 const BoxMensagens = styled.div`
@@ -33,22 +34,26 @@ const BoxInputs = styled.div`
 `
 
 const InputUsuario = styled.input`
-margin:5px;
+  margin:5px;
   font-size: 18px;
-  padding: 5px;
+  padding: 10px 5px 5px 15px;
   width: 100px;
+  border-radius: 80px;
+  border: 0px;
 `
 
 const InputMensagem = styled.input`
   flex-grow: 1;
   margin:5px;
   font-size: 18px;
-  padding: 5px;
+  padding: 10px 5px 5px 15px;
   width: 100px;
+  border-radius: 80px;
+  border: 0px;
 `
 let ButtonEnviar = styled.div`
-background-color: #25D366AA;
-font-size: 18px;
+  background-color: #128C7E;
+  font-size: 18px;
   cursor: pointer;
   display: flex;
   width:40px;
@@ -57,8 +62,8 @@ font-size: 18px;
   align-items:center;
   border-radius:50%;
   background-image:url(iconeEnviar);
-:hover{
-background-color: #25D366;
+  :hover{
+  background-color: #25D366;
 }`
 
 const BoxMensagem = styled.div`
@@ -108,8 +113,8 @@ let clicks = 0;
 class App extends React.Component {
   state = {
     arrayMensagens: [{
-      usuario: "Adimin",
-      textoMensagem: "Este é o seu whats use com responsabilidade. Click duas vezes para apagar(É uma ação irreversivel tenha cuidado). Escreva a mensagem e DEPOIS click no icone de alguma mensagem para responde-lá. Mensagens vazias não serão aceitas",
+      usuario: "Admin",
+      textoMensagem: "Este é o seu whats, utilize-o com responsabilidade. Clique duas vezes para apagar uma mensagem (esta é uma ação irreversivel, portanto tenha cuidado). Caso queira responder uma mensagem, escreva a resposta primeiro e DEPOIS clique no icone da mensagem que deseja responder. Para enviar uma mensagem (que não seja uma resposta) digite o seu nome e a sua mensagem; em seguida, aperte a tecla enter ou clique na seta ao lado da mensagem. Mensagens vazias não serão aceitas.",
       resposta: false
     }],
     inputUsuario: '',
@@ -216,8 +221,8 @@ class App extends React.Component {
   }
   render() {
     return (
-      <Todo>
-        <BoxMensagens >
+      <Todo style={{ backgroundImage: `url(${background})` }}>
+        <BoxMensagens>
           {this.state.arrayMensagens.map((msg, index) => {
             if (msg.resposta) {
               if (msg.usuario === "eu" || msg.usuario === "Eu" || msg.usuario === "EU") {
