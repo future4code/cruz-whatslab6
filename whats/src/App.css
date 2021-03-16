@@ -1,0 +1,25 @@
+.box-1 {
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  border: 1px solid black;
+  height: 610px;
+  width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.box-2 {
+  margin: auto;
+  width: 600px;
+}
+
+.box-usuario{
+  width: 80px;
+}
+.box-mensagem{
+  width: 450px;
+}
